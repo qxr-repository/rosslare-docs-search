@@ -281,6 +281,38 @@
             border-radius: 4px;
             margin-top: 8px;
             border-left: 3px solid #667eea;
+            cursor: pointer;
+            transition: all 0.2s;
+            max-height: 80px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .result-snippet:hover {
+            background: #f0f7ff;
+            border-left-color: #764ba2;
+        }
+        
+        .result-snippet.expanded {
+            max-height: none;
+        }
+        
+        .expand-indicator {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(transparent, #fafafa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #667eea;
+        }
+        
+        .result-snippet.expanded .expand-indicator {
+            display: none;
         }
         
         .snippet-label {
@@ -506,6 +538,16 @@
             window.open(fileUrl, '_blank');
         }
         
+        function toggleSnippet(id, event) {
+            event.stopPropagation();
+            const snippet = document.getElementById(id);
+            if (snippet.classList.contains('expanded')) {
+                snippet.classList.remove('expanded');
+            } else {
+                snippet.classList.add('expanded');
+            }
+        }
+        
         function search(query) {
             if (!indexData) return;
             
@@ -617,11 +659,14 @@
                 
                 let snippet = '';
                 if (file.has_content && file.content) {
-                    const contextSnippet = getContextSnippet(file.content, query, 200);
+                    const shortSnippet = getContextSnippet(file.content, query, 200);
+                    const longSnippet = getContextSnippet(file.content, query, 600);
+                    const snippetId = 'snippet_' + Math.random().toString(36).substr(2, 9);
                     snippet = `
-                        <div class="result-snippet">
-                            <div class="snippet-label">📄 Content Match</div>
-                            ${highlightMatch(contextSnippet, query)}
+                        <div class="result-snippet" id="${snippetId}" onclick="toggleSnippet('${snippetId}', event)">
+                            <div class="snippet-label">📄 Content Match (click to expand)</div>
+                            <div class="snippet-content">${highlightMatch(shortSnippet, query)}</div>
+                            <div class="expand-indicator">▼ Click to expand</div>
                         </div>
                     `;
                 } else if (file.snippet) {
