@@ -1,0 +1,79 @@
+DUPLICATE FILES TO DELETE
+==========================================
+Created: May 6, 2026
+Total files to delete: 33
+
+These files are exact duplicates of files without (1) or (2) in the name.
+Delete these to free up space while keeping the original versions.
+
+DATASHEETS & DOCUMENTATION
+==========================================
+RosslareWebsiteDocs/AY-U920BT-Datasheet-V2024_07_28 (1).pdf
+RosslareWebsiteDocs/AY-U920BT-Datasheet-V2024_07_28 (2).pdf
+RosslareWebsiteDocs/AY-U915BT-Datasheet-V2024_07_28 (1).pdf
+RosslareWebsiteDocs/AY-U915BT-Datasheet-V2024_07_28 (2).pdf
+RosslareWebsiteDocs/AY-x6255-Datasheet-V2024_07_28 (1).pdf
+RosslareWebsiteDocs/AYC-x6355-Datasheet-V2024_07_28 (1).pdf
+RosslareWebsiteDocs/AY-R6255-Rev-B-Datasheet-v01-130917-English-A4 (1).pdf
+RosslareWebsiteDocs/AY-L23-SA-23-Datasheet-v02-220414-English-A4 (1).pdf
+RosslareWebsiteDocs/DR-6255-Datasheet-v04-080517-Rev-B-English-A4 (1).pdf
+RosslareWebsiteDocs/DR-U955BT-Datasheet-V2024_08_06 (1).pdf
+RosslareWebsiteDocs/DR-U955BT-Datasheet-V2024_08_06 (2).pdf
+RosslareWebsiteDocs/MIFARE-DESFire-EV3-Credentials-Datasheet-2026-04-15 (1).pdf
+RosslareWebsiteDocs/Multi-Smart™-Readers-Datasheet-2026-04-09 (1).pdf
+RosslareWebsiteDocs/UHF-Smart™-Long-Range-Readers-V2022_06_27 (1).pdf
+RosslareWebsiteDocs/UHF-Smart™-Long-Range-Readers-V2022_06_27 (2).pdf
+
+BROCHURES & INTEGRATION DOCUMENTS
+==========================================
+RosslareWebsiteDocs/IDEMIA-integration-brochure (1).pdf
+RosslareWebsiteDocs/CSN-Select-Brochure-V2022_10_19 (1).pdf
+RosslareWebsiteDocs/CSN-Smart-brochure-V004 (1).pdf
+RosslareWebsiteDocs/STiD-integration-brochure-V002 (1).pdf
+RosslareWebsiteDocs/Elevators-integration-brochure-V003 (1).pdf
+RosslareWebsiteDocs/AxTraxNG_to_Pro-One-pager-V004 (1).pdf
+
+COMPANY & PROFILE DOCUMENTS
+==========================================
+RosslareWebsiteDocs/Company_profile-one-pager-V002 (1).pdf
+RosslareWebsiteDocs/Company_profile-V002 (1).pdf
+
+CATALOGS & MARKETING
+==========================================
+RosslareWebsiteDocs/Essentials-catalog-2026-V001-screen (1).pdf
+RosslareWebsiteDocs/Gates-solution-flyer-screen (1).pdf
+
+WHITEPAPERS
+==========================================
+RosslareWebsiteDocs/whitepaper-V002 (1).pdf
+RosslareWebsiteDocs/whitepaper-multi-site-V001 (1).pdf
+RosslareWebsiteDocs/whitepaper-biometric-V003 (1).pdf
+RosslareWebsiteDocs/whitepaper-Video-surveilance-V001 (1).pdf
+RosslareWebsiteDocs/whitepaper-cloud-based-V001 (1).pdf
+RosslareWebsiteDocs/whitepaper-mobile-credentials-V001 (1).pdf
+
+CASE STUDIES
+==========================================
+RosslareWebsiteDocs/FPT-case-study-V002 (1).pdf
+
+==========================================
+INSTRUCTIONS FOR DELETION
+==========================================
+
+METHOD 1: Using Windows Explorer
+1. Open File Explorer and navigate to: C:\Users\jjens\OneDrive\Desktop\Rosslare Documentation
+2. Use Ctrl+F to search for " (1)" or " (2)" in filenames
+3. Select the files from this list and delete them
+
+METHOD 2: Using PowerShell
+1. Open PowerShell as Administrator
+2. Copy the file paths from this list
+3. Run: Remove-Item "C:\path\to\file"
+
+METHOD 3: Manual Selection
+1. Go to each subfolder listed above
+2. Find files with (1) or (2) in the name
+3. Select and delete them
+
+NOTE: All files listed here are exact duplicates of files without the (1) or (2) suffix.
+Keeping the original versions (without numbers) will preserve all unique content.
