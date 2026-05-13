@@ -19,6 +19,92 @@
             margin: 0 auto;
         }
         
+        /* Password Screen */
+        #passwordScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+        
+        .password-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+        }
+        
+        .password-box h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        
+        .password-box p {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+        
+        .password-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .password-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .password-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .error-message {
+            color: #c33;
+            font-size: 12px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        #passwordScreen.hidden {
+            display: none;
+        }
+        
+        /* Main Content */
         .header {
             background: white;
             border-radius: 12px;
@@ -263,6 +349,18 @@
     </style>
 </head>
 <body>
+    <!-- Password Screen -->
+    <div id="passwordScreen">
+        <div class="password-box">
+            <h1>🔒 Access Required</h1>
+            <p>Enter password to access Rosslare documentation search</p>
+            <input type="password" id="passwordInput" class="password-input" placeholder="Enter password" autocomplete="off">
+            <button onclick="checkPassword()" class="password-button">Access</button>
+            <div id="errorMessage" class="error-message">❌ Incorrect password. Try again.</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
     <div class="container">
         <div class="header">
             <h1>📚 Rosslare Documentation Search</h1>
@@ -294,12 +392,48 @@
     </div>
 
     <script>
+        const CORRECT_PASSWORD = "letmeinqxr";
+        
+        // Check password on page load
+        function initPassword() {
+            const authenticated = localStorage.getItem('rosslare_auth');
+            if (authenticated === 'true') {
+                document.getElementById('passwordScreen').classList.add('hidden');
+                loadIndex();
+            } else {
+                document.getElementById('passwordInput').focus();
+            }
+        }
+        
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const errorMsg = document.getElementById('errorMessage');
+            
+            if (input === CORRECT_PASSWORD) {
+                localStorage.setItem('rosslare_auth', 'true');
+                document.getElementById('passwordScreen').classList.add('hidden');
+                loadIndex();
+                errorMsg.classList.remove('show');
+            } else {
+                errorMsg.classList.add('show');
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+        
+        // Allow Enter key to submit
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+        });
+        
         let indexData = null;
         
-        // Load index from JSON file
         async function loadIndex() {
             try {
-                // Try to load from the same directory (works when both files are in same folder)
                 const response = await fetch('search_index.json');
                 
                 if (!response.ok) {
@@ -499,8 +633,8 @@
             search(document.getElementById('searchInput').value);
         });
         
-        // Load index when page loads
-        window.addEventListener('load', loadIndex);
+        // Initialize on page load
+        window.addEventListener('load', initPassword);
     </script>
 </body>
 </html>
