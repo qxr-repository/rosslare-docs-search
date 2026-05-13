@@ -394,6 +394,36 @@
         .result-item:hover .open-indicator {
             opacity: 1;
         }
+        
+        .onedrive-button {
+            display: inline-block;
+            background: #0078d4;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+        
+        .onedrive-button:hover {
+            background: #106ebe;
+            transform: translateY(-1px);
+        }
+        
+        .file-path-info {
+            font-size: 11px;
+            color: #999;
+            margin-top: 6px;
+            padding: 6px;
+            background: #f5f5f5;
+            border-radius: 3px;
+            font-family: monospace;
+            word-break: break-all;
+        }
     </style>
 </head>
 <body>
@@ -660,12 +690,11 @@
                 const keywords = file.keywords ? file.keywords.slice(0, 6) : [];
                 
                 resultsHTML += `
-                    <div class="result-item" onclick="openFile('${escapeHtml(file.path)}')">
+                    <div class="result-item">
                         <div class="result-header">
                             <div>
                                 <div class="result-filename">
                                     ${escapeHtml(file.filename)}
-                                    <span class="open-indicator">🔗 Click to open</span>
                                 </div>
                             </div>
                             <div class="result-badges">
@@ -675,6 +704,8 @@
                             </div>
                         </div>
                         <div class="result-path">📁 ${escapeHtml(file.path)}</div>
+                        <a href="https://synerion-my.sharepoint.com/personal/jjensen_qumulex_com/" target="_blank" class="onedrive-button">🔗 Open in OneDrive</a>
+                        <div class="file-path-info">File: ${escapeHtml(file.path)}</div>
                 `;
                 
                 let snippet = '';
