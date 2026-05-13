@@ -367,7 +367,7 @@
             <p class="subtitle">Search across filenames and document content • Click results to open</p>
             
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Search docs... (e.g., 'firmware AC-825', 'wiring diagram', 'panel configuration')">
+                <input type="text" id="searchInput" placeholder="Search docs... Use quotes for exact match (e.g., \"AC-825\" or firmware)">
             </div>
             
             <div class="options">
@@ -517,8 +517,20 @@
                 return;
             }
             
-            const lowerQuery = query.toLowerCase();
-            const queryTerms = lowerQuery.split(/\s+/).filter(t => t);
+            // Check if query is wrapped in quotes for exact phrase matching
+            const isExactMatch = query.trim().startsWith('"') && query.trim().endsWith('"');
+            let lowerQuery = query.toLowerCase();
+            let queryTerms = [];
+            
+            if (isExactMatch) {
+                // Remove quotes and search for exact phrase
+                lowerQuery = lowerQuery.slice(1, -1);
+                queryTerms = [lowerQuery];
+            } else {
+                // Split into individual terms
+                queryTerms = lowerQuery.split(/\s+/).filter(t => t);
+            }
+            
             const matches = [];
             
             for (const file of indexData.files) {
@@ -526,18 +538,28 @@
                 let matchType = '';
                 
                 if (searchFilename) {
-                    if (file.filename.toLowerCase().includes(lowerQuery)) {
-                        score += 5000;
-                        matchType = 'filename';
-                    }
-                    for (const term of queryTerms) {
-                        if (file.filename.toLowerCase().includes(term)) {
-                            score += 500;
+                    const filenameLower = file.filename.toLowerCase();
+                    if (isExactMatch) {
+                        // Exact match in filename
+                        if (filenameLower.includes(lowerQuery)) {
+                            score += 5000;
+                            matchType = 'filename';
+                        }
+                    } else {
+                        // Regular term matching
+                        if (filenameLower.includes(lowerQuery)) {
+                            score += 5000;
+                            matchType = 'filename';
+                        }
+                        for (const term of queryTerms) {
+                            if (filenameLower.includes(term)) {
+                                score += 500;
+                            }
                         }
                     }
                 }
                 
-                if (file.keywords) {
+                if (file.keywords && !isExactMatch) {
                     const matching = file.keywords.filter(k => 
                         queryTerms.some(t => k.includes(t))
                     );
@@ -546,9 +568,16 @@
                 
                 if (searchContent && file.content) {
                     const contentLower = file.content.toLowerCase();
-                    for (const term of queryTerms) {
-                        const count = (contentLower.match(new RegExp(term, 'g')) || []).length;
+                    if (isExactMatch) {
+                        // Exact phrase match
+                        const count = (contentLower.match(new RegExp(lowerQuery.replace(/[.*+?^${}()|[\]\]/g, '\$&'), 'g')) || []).length;
                         score += count * 100;
+                    } else {
+                        // Regular term matching
+                        for (const term of queryTerms) {
+                            const count = (contentLower.match(new RegExp(term, 'g')) || []).length;
+                            score += count * 100;
+                        }
                     }
                     if (score > 0 && !matchType) matchType = 'content';
                 }
