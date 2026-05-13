@@ -275,7 +275,7 @@
         .result-snippet {
             font-size: 13px;
             color: #555;
-            line-height: 1.5;
+            line-height: 1.6;
             background: #fafafa;
             padding: 10px;
             border-radius: 4px;
@@ -295,6 +295,14 @@
         
         .result-snippet.expanded {
             max-height: none;
+            padding: 15px;
+            background: #f8fbff;
+            border: 1px solid #dde7f5;
+        }
+        
+        .snippet-content {
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
         
         .expand-indicator {
@@ -313,6 +321,14 @@
         
         .result-snippet.expanded .expand-indicator {
             display: none;
+        }
+        
+        .expanded-info {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            font-size: 12px;
+            color: #666;
         }
         
         .snippet-label {
@@ -541,10 +557,14 @@
         function toggleSnippet(id, event) {
             event.stopPropagation();
             const snippet = document.getElementById(id);
+            const expandedInfo = snippet.querySelector('.expanded-info');
+            
             if (snippet.classList.contains('expanded')) {
                 snippet.classList.remove('expanded');
+                expandedInfo.style.display = 'none';
             } else {
                 snippet.classList.add('expanded');
+                expandedInfo.style.display = 'block';
             }
         }
         
@@ -660,13 +680,20 @@
                 let snippet = '';
                 if (file.has_content && file.content) {
                     const shortSnippet = getContextSnippet(file.content, query, 200);
-                    const longSnippet = getContextSnippet(file.content, query, 600);
+                    const expandedSnippet = getContextSnippet(file.content, query, 1500);
                     const snippetId = 'snippet_' + Math.random().toString(36).substr(2, 9);
+                    const contentMatch = file.content.toLowerCase().indexOf(query.toLowerCase());
+                    const charPosition = Math.max(0, contentMatch);
+                    
                     snippet = `
                         <div class="result-snippet" id="${snippetId}" onclick="toggleSnippet('${snippetId}', event)">
-                            <div class="snippet-label">📄 Content Match (click to expand)</div>
-                            <div class="snippet-content">${highlightMatch(shortSnippet, query)}</div>
+                            <div class="snippet-label">📄 Content Match (click to expand for more context)</div>
+                            <div class="snippet-content" data-expanded="${expandedSnippet.replace(/"/g, '&quot;')}">${highlightMatch(shortSnippet, query)}</div>
                             <div class="expand-indicator">▼ Click to expand</div>
+                            <div class="expanded-info" style="display:none;">
+                                <strong>Full Context (1500 chars):</strong><br>
+                                <div style="margin-top: 8px; background: white; padding: 8px; border-radius: 3px; max-height: 300px; overflow-y: auto;">${highlightMatch(expandedSnippet, query)}</div>
+                            </div>
                         </div>
                     `;
                 } else if (file.snippet) {
