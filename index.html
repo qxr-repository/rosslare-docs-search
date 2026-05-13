@@ -394,7 +394,7 @@
     <script>
         const CORRECT_PASSWORD = "letmeinqxr";
         
-        // Check password on page load
+        // Password functions
         function initPassword() {
             const authenticated = localStorage.getItem('rosslare_auth');
             if (authenticated === 'true') {
@@ -421,7 +421,7 @@
             }
         }
         
-        // Allow Enter key to submit
+        // Allow Enter key to submit password
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('passwordInput').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
@@ -432,6 +432,7 @@
         
         let indexData = null;
         
+        // Load index
         async function loadIndex() {
             try {
                 const response = await fetch('search_index.json');
@@ -540,13 +541,11 @@
                 if (searchFilename) {
                     const filenameLower = file.filename.toLowerCase();
                     if (isExactMatch) {
-                        // Exact match in filename
                         if (filenameLower.includes(lowerQuery)) {
                             score += 5000;
                             matchType = 'filename';
                         }
                     } else {
-                        // Regular term matching
                         if (filenameLower.includes(lowerQuery)) {
                             score += 5000;
                             matchType = 'filename';
@@ -569,11 +568,9 @@
                 if (searchContent && file.content) {
                     const contentLower = file.content.toLowerCase();
                     if (isExactMatch) {
-                        // Exact phrase match
-                        const count = (contentLower.match(new RegExp(lowerQuery.replace(/[.*+?^${}()|[\]\]/g, '\$&'), 'g')) || []).length;
+                        const count = (contentLower.match(new RegExp(lowerQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length;
                         score += count * 100;
                     } else {
-                        // Regular term matching
                         for (const term of queryTerms) {
                             const count = (contentLower.match(new RegExp(term, 'g')) || []).length;
                             score += count * 100;
