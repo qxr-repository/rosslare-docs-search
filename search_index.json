@@ -1,6 +1,6 @@
 {
   "created": "2026-05-07T20:54:00.814562",
-  "total_files": 263,
+  "total_files": 262,
   "files_with_content": 24,
   "files": [
     {
@@ -4785,56 +4785,6 @@
       "snippet": "",
       "content": "",
       "has_content": false
-    },
-    {
-      "path": "README_SEARCH_INDEX.md",
-      "filename": "README_SEARCH_INDEX.md",
-      "file_type": ".md",
-      "keywords": [
-        "search",
-        "the",
-        "files",
-        "index",
-        "and",
-        "all",
-        "type",
-        "file",
-        "pdf",
-        "documentation",
-        "your",
-        "open",
-        "html",
-        "this",
-        "folder",
-        "keywords",
-        "825",
-        "firmware",
-        "wiring",
-        "find",
-        "indexed",
-        "use",
-        "interface",
-        "click",
-        "browser",
-        "will",
-        "interactive",
-        "any",
-        "keyword",
-        "filename",
-        "results",
-        "you",
-        "full",
-        "263",
-        "types",
-        "documents",
-        "docx",
-        "update",
-        "quick_index",
-        "search_index"
-      ],
-      "snippet": "# Documentation Search Index Your Rosslare documentation has been indexed for fast searching. Here's how to use it: ## 🔍 Quick Start 1. **Open the search interface:** - Double-click `search.html` in this folder - Your browser will open an interactive search tool 2. **Search your docs:** - Type any k...",
-      "content": "# Documentation Search Index Your Rosslare documentation has been indexed for fast searching. Here's how to use it: ## 🔍 Quick Start 1. **Open the search interface:** - Double-click `search.html` in this folder - Your browser will open an interactive search tool 2. **Search your docs:** - Type any keyword in the search box (filename, file type, or content keywords) - Results appear instantly as you type - Click on any result to see the full file path ## 📊 What's Indexed - **263 files** across all document types - Filenames, paths, and extracted keywords from documents - File types: PDF, DOCX, MD, TXT, HTML, and more ## 🛠️ Rebuilding the Index If you add new files to this folder and want to update the index: ```bash python3 quick_index.py ``` This will: - Scan all files in the folder - Extract keywords and metadata - Update `search_index.json` ## 📁 Files Included - **search.html** - Interactive search interface (open in browser) - **search_index.json** - Full searchable index of all files - **quick_index.py** - Python script to rebuild the index anytime ## ⚡ Search Tips - Search by **filename**: \"AC-825\", \"firmware\", \"wiring\" - Search by **file type**: \".pdf\", \".docx\", \".md\" - Search by **keyword**: \"installation\", \"configuration\", \"troubleshooting\" - Results are ranked by relevance ## 🎯 Example Searches - `firmware` - Find firmware-related documents - `AC-825` - Find all AC-825 panel documentation - `wiring` - Locate wiring diagrams and guides - `axtrax` - Find AxtraxNG and AxtraxPro guides - `.pdf` - List all PDF files --- **Index created:** 2026-05-07 **Total files:** 263 **Ready to use!** 🚀",
-      "has_content": true
     }
   ]
 }
