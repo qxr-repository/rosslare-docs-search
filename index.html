@@ -682,17 +682,34 @@
                     const shortSnippet = getContextSnippet(file.content, query, 200);
                     const expandedSnippet = getContextSnippet(file.content, query, 1500);
                     const snippetId = 'snippet_' + Math.random().toString(36).substr(2, 9);
-                    const contentMatch = file.content.toLowerCase().indexOf(query.toLowerCase());
-                    const charPosition = Math.max(0, contentMatch);
+                    const hasFormatted = file.formatted_content && file.formatted_content.length > 0;
+                    
+                    let expandedDisplay = '';
+                    if (hasFormatted) {
+                        // Show formatted content (Word docs with formatting, Excel as tables, etc)
+                        expandedDisplay = `
+                            <div style="margin-top: 8px; background: white; padding: 12px; border-radius: 3px; max-height: 400px; overflow-y: auto; border: 1px solid #e0e0e0;">
+                                <strong style="display: block; margin-bottom: 8px; color: #667eea;">📄 Document Preview:</strong>
+                                <div style="font-size: 12px; line-height: 1.5;">${file.formatted_content}</div>
+                            </div>
+                        `;
+                    } else {
+                        // Fall back to text content
+                        expandedDisplay = `
+                            <div style="margin-top: 8px; background: white; padding: 8px; border-radius: 3px; max-height: 300px; overflow-y: auto;">
+                                <strong>Full Context:</strong><br>
+                                ${highlightMatch(expandedSnippet, query)}
+                            </div>
+                        `;
+                    }
                     
                     snippet = `
                         <div class="result-snippet" id="${snippetId}" onclick="toggleSnippet('${snippetId}', event)">
-                            <div class="snippet-label">📄 Content Match (click to expand for more context)</div>
-                            <div class="snippet-content" data-expanded="${expandedSnippet.replace(/"/g, '&quot;')}">${highlightMatch(shortSnippet, query)}</div>
+                            <div class="snippet-label">📄 Content Match (click to expand - shows ${hasFormatted ? 'formatted preview' : 'full context'})</div>
+                            <div class="snippet-content">${highlightMatch(shortSnippet, query)}</div>
                             <div class="expand-indicator">▼ Click to expand</div>
                             <div class="expanded-info" style="display:none;">
-                                <strong>Full Context (1500 chars):</strong><br>
-                                <div style="margin-top: 8px; background: white; padding: 8px; border-radius: 3px; max-height: 300px; overflow-y: auto;">${highlightMatch(expandedSnippet, query)}</div>
+                                ${expandedDisplay}
                             </div>
                         </div>
                     `;
