@@ -598,23 +598,6 @@
             }
         }
         
-        function openOneDriveFolder(filePath) {
-            // Extract folder path from file path
-            const parts = filePath.split('/');
-            const fileName = parts[parts.length - 1];
-            const folderPath = parts.slice(0, -1).join('/');
-            
-            // OneDrive folder navigation URL
-            // This navigates to the folder containing the file
-            const oneDriveBaseUrl = 'https://synerion-my.sharepoint.com/personal/jjensen_qumulex_com/Documents/';
-            
-            let folderUrl = oneDriveBaseUrl;
-            if (folderPath) {
-                folderUrl += folderPath.replace(/\\|\//g, '/');
-            }
-            
-            window.open(folderUrl, '_blank');
-        }
         
         function search(query) {
             if (!indexData) return;
@@ -722,7 +705,7 @@
                             </div>
                         </div>
                         <div class="result-path">📁 ${escapeHtml(file.path)}</div>
-                        <a href="javascript:openOneDriveFolder('${escapeHtml(file.path)}')" class="onedrive-button">🔗 Open Folder in OneDrive</a>
+                        <a href="https://synerion-my.sharepoint.com/:f:/g/personal/jjensen_qumulex_com/IgBF4IBmpkezR5Sq3wpBdPIhAaq4fukrpBi7YrSeyeRd9tQ?e=LBUBJ0" target="_blank" class="onedrive-button">🔗 Open OneDrive Repository</a>
                         <div class="file-path-info">File: ${escapeHtml(file.path)}</div>
                 `;
                 
